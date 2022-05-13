@@ -1,0 +1,161 @@
+/*! Fonts */
+@include fontFace('Arial', 'arial-regular', '400', 'normal');
+@include fontFace('Arial', 'arial-italic', '400', 'italic');
+
+@include fontFace('Georgia', 'georgia-regular', '400', 'normal');
+@include fontFace('Georgia', 'georgia-italic', '400', 'italic');
+
+/*! Typography */
+html {
+	font: 15px / 160% 'Arial', sans-serif;
+}
+
+.logo-link {
+	&__title {
+		font: 32px / 110% 'Georgia', serif;
+		letter-spacing: 0.06em;
+	}
+
+	&__subtitle {
+		font: 13px / 14.95px 'Arial', sans-serif;
+		letter-spacing: 0.1em;
+	}
+}
+
+h1 {
+	font: 44px / 130% 'Georgia', serif;
+	@include maxBreakpoint('middle') {
+		font-size: 25px;
+		letter-spacing: 0.06em;
+		text-align: center;
+	}
+}
+
+h2, .friends__title-pets {
+	font: 35px / 130% 'Georgia', serif;
+	letter-spacing: 0.06em;
+
+	@include maxBreakpoint('middle') {
+		font-size: 25px;
+		text-align: center;
+	}
+}
+
+.menu__link {
+	@include maxBreakpoint('middle') {
+		font: 32px / 160% 'Arial', sans-serif;
+	}
+}
+
+.button {
+	font: 17px / 22px 'Georgia', serif;
+	letter-spacing: 0.06em;
+}
+
+.friends__name, .help__item-title {
+		font: 20px / 115% 'Georgia', serif;
+		letter-spacing: 0.06em;
+}
+
+.friends-pets__button-text {
+	font: 20px / 115% 'Georgia', serif;
+	letter-spacing: 0.06em;
+
+}
+
+.friends__article {
+	&-title {
+		font: 35px / 130% 'Georgia', serif;
+		letter-spacing: 0.06em;
+
+		@include maxBreakpoint('middle') {
+			text-align: center;
+		}
+	}
+
+	&-subtitle {
+		font: 20px / 115% 'Georgia', serif;
+		letter-spacing: 0.06em;
+
+		@include maxBreakpoint('middle') {
+			text-align: center;
+		}
+	}
+
+	&-paragraph {
+		font: 15px / 110% 'Georgia', serif;
+		letter-spacing: 0.06em;
+
+		@include maxBreakpoint('stretch') {
+			font-size: 13px;
+			line-height: 110%;
+		}
+
+		@include maxBreakpoint('middle') {
+			text-align: justify;
+		}
+	}
+
+	&-list {
+		font: 15px / 110% 'Georgia', serif;
+	}
+}
+
+.help {
+	&__item-title {
+		font: 20px / 115% 'Georgia', serif;
+		letter-spacing: 0.06em;
+
+		@include maxBreakpoint('middle') {
+			font-size: 15px;
+			line-height: 110%;
+		}
+	}
+}
+
+.donation {
+	&__text {
+		font: italic 12px / 18px 'Arial', sans-serif;
+
+		@include maxBreakpoint('middle') {
+			text-align: justify;
+		}
+	}
+
+	&__card {
+		&-label {
+			font: 15px / 17px 'Georgia', serif;
+			letter-spacing: 0.06em;
+
+			@include maxBreakpoint('middle') {
+				letter-spacing: normal;
+				text-align: center;
+				line-height: 24px;
+			}
+		}
+
+		&-number {
+			font: 20px / 115% 'Georgia', serif;
+			letter-spacing: 0.06em;
+
+			@include maxBreakpoint('middle') {
+				font-size: 15px;
+				line-height: 16.5px;
+			}
+		}
+	}
+}
+
+.contacts {
+	&__email, &__tel {
+		font: 20px / 115% 'Georgia', serif;
+		letter-spacing: 0.06em;
+	}
+}
+
+.adress {
+	&__link {
+		font: 20px / 115% 'Georgia', serif;
+		letter-spacing: 0.06em;
+	}
+}
