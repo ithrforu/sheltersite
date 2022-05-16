@@ -38,23 +38,19 @@
 	&__link {
 		&--index-color {
 			color: $color-dark-s;
-	
+
 			&--active, &:focus, &:active, &:hover {
 				color: $color-light-s;
 			}
 		}
-	
+
 		&--pets-color {
 			color: $color-dark-l;
-	
-			&:focus, &:active, &:hover {
+
+			&--active, &:focus, &:active, &:hover {
 				color: $color-dark-3xl;
 			}
-	
-			&--active {
-				color: $color-dark-3xl;
-			}
-	}
+		}
 	}
 }
 
@@ -63,47 +59,12 @@
 	border: none;
 }
 
-.menu__link {
-	&--index-color {
-		color: $color-dark-s;
-
-		&:focus, &:active, &:hover {
-			color: $color-light-s;
-		}
-
-		&--active {
-			color: $color-light-s;
-		}
-	}
-
-	&--pets-color {
-		color: $color-dark-l;
-
-		&:focus, &:active, &:hover {
-			color: $color-dark-3xl;
-		}
-
-		&--active {
-			color: $color-dark-3xl;
-		}
-	}
-}
-
-.button, .button-nav {
+.button {
 	color: $color-dark-3xl;
 
 	&--color--primary {
 		background-color: $color-primary;
 		border: none;
-
-		&--current {
-			background-color: $color-primary;
-			border: none;
-			cursor: auto;
-			&:focus, &:hover {
-				background-color: $color-primary;
-			}
-		}
 
 		&:focus, &:hover {
 			background-color: $color-primary-light;
@@ -118,12 +79,31 @@
 			background-color: $color-primary-light;
 		}
 	}
+}
 
-	&--disabled {
+.button-nav {
+		background-color: transparent;
+		border: 2px solid $color-primary;
+		&:hover {
+			border: 2px solid $color-primary-light;
+			background-color: $color-primary-light;
+		}
+
+	&--current {
+		background-color: $color-primary;
+		border: none;
+		&:hover {
+			background-color: $color-primary;
+			border: none;
+		}
+	}
+
+	&[disabled] {
 		color: $color-dark-s;
 		border: 2px solid $color-dark-s;
 		&:focus, &:hover {
 			background-color: transparent;
+			color: $color-dark-s;
 			border: 2px solid $color-dark-s;
 		}
 	}
