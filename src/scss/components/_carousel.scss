@@ -1,5 +1,5 @@
 .button-nav{
-	&--prev {
+	&--left {
 		@include maxBreakpoint('middle') {
 			order: 1;
 			position: absolute;
@@ -8,7 +8,7 @@
 		}
 	}
 
-	&--next {
+	&--right {
 		@include maxBreakpoint('middle') {
 			position: relative;
 			left: 61px;
