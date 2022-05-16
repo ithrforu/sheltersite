@@ -1,14 +1,14 @@
-async function fetchAsyncTodos(url) {
+async function fetchAsyncData(url) {
 	const response = await fetch(url);
 	return response.json();
 }
 
-const dataArray = await fetchAsyncTodos('./../assets/json/pets.json');
+const dataArray = await fetchAsyncData('assets/json/pets.json');
 
 export default function carouselSlide() {
 
 	const cards        = dataArray.slice(0);
-	const carousel     = document.querySelector('.carousel__inner');
+	const CAROUSEL     = document.querySelector('.carousel__inner');
 	const ITEM_LEFT    = document.querySelector('.carousel__item--left');
 	const ITEM_RIGHT   = document.querySelector('.carousel__item--right');
 	const ITEM_ACTIVE  = document.querySelector('.carousel__item--active');
@@ -27,7 +27,21 @@ export default function carouselSlide() {
 	}
 	getRandomCards(cards);
 
-	// Carousel steps
+	// Viewed cards numbers array (for mediaQuerySmall)
+	let viewedNumbers = [];
+	// And push function
+	function viewedNumbersPush() {
+		const activeNumber = getItemNumbers('active');
+
+		switch(step === mediaQueries.mediaQuerySmall.step) {
+			case(!viewedNumbers.includes(...activeNumber)):
+				viewedNumbers.push(...activeNumber);
+				break;
+		}
+
+	}
+
+	// Carousel steps and media queries settings
 	let step;
 
 	const mediaQueries = {
@@ -61,20 +75,21 @@ export default function carouselSlide() {
 
 		if(query.matches && query.media === queryMax.query) {
 			step = queryMax.step;
-			createStartCards();
+			generateStartCards();
 		}
 
 		if(query.matches && query.media === queryMid.query) {
 			step = queryMid.step;
-			createStartCards();
+			generateStartCards();
 		}
 
 		if(query.matches && query.media === querySmall.query) {
 			step = querySmall.step;
-			createStartCards();
+			generateStartCards();
 		}
 	}
 
+	// Cards generating  functions
 	function getItemNumbers(itemPosition) {
 		const numbers = [];
 		const itemCards = document.querySelectorAll(`.carousel__item--${itemPosition} .carousel__card`);
@@ -83,7 +98,7 @@ export default function carouselSlide() {
 		return numbers;
 	}
 
-	function createStartCards() {
+	function generateStartCards() {
 		const leftCards = cards.slice(0, step);
 		createCards(ITEM_LEFT, leftCards);
 
@@ -94,6 +109,39 @@ export default function carouselSlide() {
 		const activeNumbers = getItemNumbers('active');
 		const rightCards = cards.filter(card => !activeNumbers.includes(card.unicNumber)).slice(0, step);
 		createCards(ITEM_RIGHT, rightCards);
+
+		viewedNumbersPush();
+	}
+
+	function generateCards(NodeForChange) {
+		let generatedCards;
+
+		if(step === mediaQueries.mediaQuerySmall.step) {
+			// For mediaQuerySmall
+			// Generate array of not viewed cards (witch viewed cards array dont have)
+			viewedNumbersPush();
+			generatedCards = cards.filter(card => !viewedNumbers.includes(card.unicNumber));
+
+			// When all cards are viewed
+			if(cards.length === viewedNumbers.length) {
+				// Generate first card from viewedNumbers array
+				generatedCards = cards.filter(card => viewedNumbers[0] === card.unicNumber);
+				// Reset viewedNumbers array
+				viewedNumbers = viewedNumbers.slice(0,1);
+			} 
+		} else {
+			// For other queries
+			// Generate unic cards (witch active carousel item dont have)
+			getRandomCards(cards);
+			const activeNumbers = getItemNumbers('active');
+			generatedCards = cards.filter(card => !activeNumbers.includes(card.unicNumber));
+		}
+
+		// Splice generated cards by amount of active cards
+		generatedCards.splice(step);
+
+		// Create DOM of changed cards
+		createCards(NodeForChange, generatedCards);
 	}
 
 	// Generate cards DOM
@@ -102,7 +150,7 @@ export default function carouselSlide() {
 
 		for(let card of cardsArray) {
 			const cardTemplate = document.createElement('div');
-			cardTemplate.classList.add('carousel__card');
+			cardTemplate.classList.add('card', 'carousel__card');
 			cardTemplate.dataset.unicNumber = card.unicNumber;
 			cardTemplate.innerHTML = `
 				<div class="friends__card">
@@ -159,84 +207,46 @@ export default function carouselSlide() {
 
 	}
 
-	function generateCards(NodeForChange) {
-		// Shuffle cards array
-		getRandomCards(cards);
-
-		const activeNumbers = getItemNumbers('active');
-		let generatedCards;
-
-		if(step === mediaQueries.mediaQuerySmall.step) {
-			// For mediaQuerySmall
-			// Generate array of not viewed cards (witch viewed cards array dont have)
-			// ViewNumbers is a global scope array
-			viewedNumbers.push(...activeNumbers);
-
-			if(cards.length === viewedNumbers.length) {
-				viewedNumbers = viewedNumbers.slice(viewedNumbers.length - 2, viewedNumbers.length - 1)
-			}
-
-			generatedCards = cards.filter(card => !viewedNumbers.includes(card.unicNumber));
-		} else {
-			// For other queries
-			// Generate unic cards (witch active carousel item dont have)
-			generatedCards = cards.filter(card => !activeNumbers.includes(card.unicNumber));
-		}
-
-		// Splice generated cards by amount of active cards
-		generatedCards.splice(step);
-
-		// Create DOM of changed cards
-		createCards(NodeForChange, generatedCards);
-	}
-
-	// Animation and listeners settings
+	// Animation and listeners functions
 	function moveLeft() {
-		carousel.classList.add('transition-left');
+		CAROUSEL.classList.add('transition-left');
 
-		BUTTON_LEFT.removeEventListener('click', moveLeft);
-		BUTTON_RIGHT.removeEventListener('click', moveRight);
+		BUTTON_LEFT.disabled = true;
+		BUTTON_RIGHT.disabled = true;
 	}
 
 	function moveRight() {
-		carousel.classList.add('transition-right');
+		CAROUSEL.classList.add('transition-right');
 
-		BUTTON_LEFT.removeEventListener('click', moveLeft);
-		BUTTON_RIGHT.removeEventListener('click', moveRight);
+		BUTTON_LEFT.disabled = true;
+		BUTTON_RIGHT.disabled = true;
 	}
 
 	// Button listeners
 	BUTTON_LEFT.addEventListener('click', moveLeft);
 	BUTTON_RIGHT.addEventListener('click', moveRight);
 
-	// For mediaQuerySmall. Push start active card's number to viewNumbers array
-	let viewedNumbers;
-	if(step === mediaQueries.mediaQuerySmall.step) {
-		const activeNumbers = getItemNumbers('active');
-		viewedNumbers       = [...activeNumbers];
-	}
-
 	// Items swap logic
-	carousel.addEventListener('animationend', (animationEvent) => {
+	CAROUSEL.addEventListener('animationend', (animationEvent) => {
 		let changeItem;
 
 		// Slider animation classes remove and cards swaps
 		if(animationEvent.animationName === 'move-left') {
-			carousel.classList.remove('transition-left');
+			CAROUSEL.classList.remove('transition-left');
 			ITEM_RIGHT.innerHTML = ITEM_ACTIVE.innerHTML;
 			ITEM_ACTIVE.innerHTML = ITEM_LEFT.innerHTML;
 			changeItem = ITEM_LEFT;
 		} else {
-			carousel.classList.remove('transition-right');
+			CAROUSEL.classList.remove('transition-right');
 			ITEM_LEFT.innerHTML = ITEM_ACTIVE.innerHTML;
 			ITEM_ACTIVE.innerHTML = ITEM_RIGHT.innerHTML;
 			changeItem = ITEM_RIGHT;
 		}
 		generateCards(changeItem);
 
-		// Return button listeners after remove by button 'click'
-		BUTTON_LEFT.addEventListener('click', moveLeft);
-		BUTTON_RIGHT.addEventListener('click', moveRight);
+		// // Return button listeners after remove by button 'click'
+		BUTTON_LEFT.disabled = false;
+		BUTTON_RIGHT.disabled = false;
 	});
 
 	}
