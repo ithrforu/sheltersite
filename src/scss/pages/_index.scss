@@ -1,0 +1,343 @@
+.intro {
+	background: url('../assets/images/noise_transparent@2x.png'),
+	            radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
+	            #211F20;
+
+	&__header {
+		height: 120px;
+		padding-top: 60px;
+
+		@include maxBreakpoint('stretch') {
+			height: 90px;
+			padding-top: 30px;
+		}
+	}
+
+	&__content {
+		display: flex;
+		justify-content: space-between;
+		min-height: 728px;
+		padding: 0;
+		margin-top: 60px;
+		@include maxBreakpoint('stretch') {
+			flex-direction: column;
+			gap: 100px;
+			min-height: 1015px;
+		}
+
+		@include maxBreakpoint('middle') {
+			gap: 105px;
+			min-height: auto;
+		}
+
+	}
+
+	&__preview {
+		margin-top: 163px;
+		@include maxBreakpoint('stretch') {
+			max-width: 460px;
+			max-height: 322px;
+			margin: 0 auto;
+		}
+
+		@include maxBreakpoint('middle') {
+			// min-width: 300px;
+			// min-height: 96px;
+			margin: 0 auto;
+		}
+	}
+
+	&__title {
+		width: 310px;
+
+		@include maxBreakpoint('middle') {
+			width: auto;
+		}
+	}
+
+	&__text {
+		width: 460px;
+
+		@include maxBreakpoint('middle') {
+			width: auto;
+		}
+	}
+
+	&__title, &__text {
+		margin-bottom: 42px;
+
+		@include maxBreakpoint('middle') {
+			margin: 0 auto 42px;
+			text-align: center;
+		}
+	}
+
+	&__button {
+		width: 208px;
+		height: 52px;
+
+		@include maxBreakpoint('stretch') {
+			margin: 0 auto;
+		}
+	}
+
+	&__image {
+		width: 100%;
+		max-width: 698px;
+		height: auto;
+		@include maxBreakpoint('stretch') {
+			align-self: flex-end;
+			max-width: 698px;
+			min-width: 569px;
+			width: 55%;
+		}
+
+		@include maxBreakpoint('middle') {
+			max-width: 569px;
+			min-width: 260px;
+			width: 60%;
+		}
+	}
+}
+
+.about {
+	&__inner {
+		display: flex;
+		align-items: flex-start;
+		gap: 120px;
+		padding-left: 175px;
+		padding-right: 175px;
+
+		@include maxBreakpoint('stretch') {
+			flex-direction: column-reverse;
+			align-items: center;
+			gap: 80px;
+			padding: 0;
+		}
+
+		@include maxBreakpoint('middle') {
+			max-width: 460px;
+			margin: 0 auto;
+			gap: 42px;
+		}
+	}
+
+	&__image {
+		display: block;
+		@include maxBreakpoint('middle') {
+			min-width: 260px;
+			width: 60%;
+		}
+	}
+
+	&__content {
+		align-self: flex-start;
+		max-width: 430px;
+		padding: 14px 0 14px;
+
+		@include maxBreakpoint('stretch') {
+			width: auto;
+			padding: 0;
+			margin: 0 auto;
+		}
+	}
+
+	&__title {
+		width: 370px;
+		height: 90px;
+
+		@include maxBreakpoint('middle') {
+			width: auto;
+			height: 64px;
+		}
+	}
+
+	&__text {
+		width: 430px;
+		margin-top: 25px;
+		margin-bottom: 0px;
+
+		@include maxBreakpoint('middle') {
+			width: auto;
+			padding: 0 15px;
+			text-align: justify;
+		}
+	}
+
+	&__text + &__text {
+		margin-top: 25px;
+
+		@include maxBreakpoint('middle') {
+			margin-top: 22px;
+		}
+	}
+}
+
+.friends {
+	&__inner-index {
+		gap: 60px;
+	}
+}
+
+.help {
+	&__title {
+		max-width: 310px;
+		height: 90px;
+		text-align: center;
+		margin: 0 auto 60px;
+
+		@include maxBreakpoint('middle') {
+			max-width: 300px;
+			height: 64px;
+			margin: 0 auto 42px;
+		}
+	}
+
+	&__items {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 55px 120px;
+		list-style: none;
+		padding: 0;
+		margin: 0 auto;
+
+		@include maxBreakpoint('stretch') {
+		justify-content: center;
+		gap: 55px 60px;
+		padding-left: 39px;
+		padding-right: 39px;
+		}
+
+		@include maxBreakpoint('middle') {
+			justify-content: center;
+			gap: 30px;
+			// max-width: 600px;
+			min-width: 290px;
+			padding: 0;
+		}
+
+		@include maxBreakpoint('small') {
+			justify-content: space-between;
+			max-width: 290px;
+			min-height: 555px;
+		}
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 30px;
+
+		@include maxBreakpoint('stretch') {
+			width: 170px;
+		}
+
+		@include maxBreakpoint('middle') {
+			gap: 20px;
+			width: 130px;
+		}
+	}
+
+	&__image {
+		width: 60px;
+		height: 60px;
+
+		@include maxBreakpoint('middle') {
+			width: 50px;
+			height: 50px;
+		}
+	}
+}
+
+.donation {
+	&__inner {
+		display: flex;
+		align-items: center;
+		gap: 30px;
+		max-width: 915px;
+		margin: 0 auto;
+
+		@include maxBreakpoint('stretch') {
+			flex-direction: column-reverse;
+			gap: 60px;
+			margin: 0 auto;
+		}
+
+		@include maxBreakpoint('middle') {
+			gap: 22px;
+		}
+	}
+
+	&__title {
+		width: 300px;
+		height: 90px;
+
+		@include maxBreakpoint('middle') {
+			width: auto;
+			height: 64px;
+			margin: 0 auto;
+		}
+	}
+
+	&__image {
+		@include maxBreakpoint('middle') {
+			min-width: 260px;
+			width: 60%;
+		}
+	}
+
+	&__content {
+		max-width: 380px;
+	}
+
+	&__card {
+		padding: 0;
+		margin: 0;
+
+		&-label {
+			margin: 20px 0;
+		}
+
+		&-details {
+			max-width: 350px;
+			height: 43px;
+			padding: 0;
+			border-radius: 9px;
+			margin: 0;
+
+			@include maxBreakpoint('middle') {
+				max-width: 282px;
+				margin: 0 auto;
+			}
+		}
+
+		&-link {
+			display: flex;
+			align-items: center;
+			max-width: 350px;
+			height: 43px;
+			padding: 10px 15px;
+
+			@include maxBreakpoint('middle') {
+				max-width: 282px;
+			}
+		}
+
+		&-number {
+			display: block;
+			margin-left: 15px;
+		}
+	}
+
+	&__text {
+		margin: 20px 0 0;
+
+		@include maxBreakpoint('middle') {
+			max-width: 280px;
+			margin: 20px auto;
+		}
+	}
+}

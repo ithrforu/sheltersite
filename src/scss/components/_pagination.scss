@@ -1,0 +1,68 @@
+.pagination {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__inner {
+		padding-top: 60px;
+		position: relative;
+
+		@include maxBreakpoint('stretch') {
+			padding-top: 45px;
+		}
+	}
+
+	&__page {
+		max-width: 1200px;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 270px);
+		grid-template-rows: repeat(auto-fill, 435px);
+		column-gap: 40px;
+		row-gap: 30px;
+		visibility: hidden;
+		opacity: 0;
+		transition: all 0.6s ease;
+
+		&--active {
+			visibility: visible;
+			opacity: 1;
+			transition: all 0.6s ease;
+		}
+
+		&:first-child {
+			position: relative;
+		}
+
+		&:not(:first-child) {
+			position: absolute;
+			bottom: 0;
+		}
+
+		@include maxBreakpoint('stretch') {
+			max-width: 708px;
+		}
+
+		@include maxBreakpoint('middle') {
+			max-width: 300px;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		justify-content: space-between;
+		width: 340px;
+		margin-top: 45px;
+
+		@include maxBreakpoint('middle') {
+			min-width: 300px;
+			width: auto;
+			margin-top: 40px
+		}
+
+		@include maxBreakpoint('smallest') {
+			max-width: 300px;
+			min-width: auto;
+			margin-top: 42px;
+		}
+	}
+}

@@ -1,0 +1,24 @@
+@import 
+	'abstracts/variables',
+	'abstracts/breakpoints',
+	'abstracts/mixins';
+
+@import
+	'base/normalize',
+	'base/page',
+	'base/typography',
+	'base/colors';
+
+@import 
+	'layout/header',
+	'layout/section',
+	'layout/footer';
+
+@import
+	'components/buttons',
+	'components/carousel',
+	'components/pagination';
+
+@import
+	'pages/index',
+	'pages/pets';
