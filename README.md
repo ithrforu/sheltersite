@@ -18,7 +18,7 @@ If you do everything correct and start developer mode, you will have a browser w
 ## :open_file_folder: Files stucture
 
 ```
-shelter
+sheltersite
 ├── src
 │   ├── assets
 │   │   ├── fonts
