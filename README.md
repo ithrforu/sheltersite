@@ -8,7 +8,7 @@
 * Install [NodeJS](https://nodejs.org/en/) ***16.14.2 LTS** (or another new version)* . 
 * Download build with [Git](https://git-scm.com/downloads): ```git clone https://github.com/ithrforu/sheltersite/```
 * Install ```gulp``` globally: ```npm i --global gulp-cli```
-* Move to project folder: ```cd ~/shelter```
+* Move to project folder: ```cd ~/sheltersite```
 * Download dependencies: ```npm i```
 * For start print: ```gulp dev``` (developer mode).
 * For build project print: ```gulp build``` (build mode).
