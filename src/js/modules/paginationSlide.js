@@ -1,18 +1,118 @@
-async function fetchAsyncTodos(url) {
+async function fetchAsyncData(url) {
 	const response = await fetch(url);
 	return response.json();
 }
 
-const dataArray = await fetchAsyncTodos('./../assets/json/pets.json');
+const dataArray = await fetchAsyncData('assets/json/pets.json');
 
 export default function paginationSlide() {
 
-	function createCards(paginationlItem, cardsArray) {
-		paginationlItem.innerHTML = '';
+	const cards = dataArray.slice(0);
+	const PAGINATION   = document.querySelector('.pagination__inner');
+	const BUTTON_FIRST = document.querySelector('.button-nav--first');
+	const BUTTON_PREV  = document.querySelector('.button-nav--prev');
+	const BUTTON_NEXT  = document.querySelector('.button-nav--next');
+	const BUTTON_LAST  = document.querySelector('.button-nav--last');
+	let pageCounter;
+	let pageAmount;
+
+	// Cards shuffle (The Fisher–Yates shuffle)
+	function getRandomCards(array) {
+
+		for(let currentIndex = array.length - 1; currentIndex > 0; currentIndex--) {
+			let randomIndex = Math.floor(Math.random() * (currentIndex + 1));
+			[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+		}
+
+	}
+
+	// Pagination steps
+	let step;
+
+	const mediaQueries = {
+		mediaQueryMax: {
+			query: '(min-width: 1280px)',
+			step: 8,
+			},
+
+		mediaQueryMid: {
+			query: '(min-width: 768px) and (max-width: 1279px)',
+			step: 6,
+			},
+
+		mediaQuerySmall: {
+			query: '(max-width: 767px)',
+			step: 3,
+			},
+	};
+
+	// Set step value by media queries check
+	for(let prop in mediaQueries) {
+		const matchMediaObj = window.matchMedia(mediaQueries[prop]['query']);
+		setStep(matchMediaObj);
+		matchMediaObj.onchange = setStep;
+	}
+
+	function setStep(query) {
+		const queryMax   = mediaQueries.mediaQueryMax;
+		const queryMid   = mediaQueries.mediaQueryMid;
+		const querySmall = mediaQueries.mediaQuerySmall;
+
+		if(query.matches && query.media === queryMax.query) {
+			step = queryMax.step;
+			generateStartCards();
+		}
+
+		if(query.matches && query.media === queryMid.query) {
+			step = queryMid.step;
+			generateStartCards();
+		}
+
+		if(query.matches && query.media === querySmall.query) {
+			step = querySmall.step;
+			generateStartCards();
+		}
+	}
+
+	// Generate 48 pseudo random cards
+	// And after set media queries states to inital values
+	function generateStartCards() {
+		PAGINATION.innerHTML = '';
+
+		let cardsCount = 0;
+		let pageCount = 1;
+
+		while(cardsCount < 48) {
+			getRandomCards(cards);
+			const stepCards = cards.slice(0, step);
+			createPage(pageCount, stepCards);
+
+			cardsCount += step;
+			pageCount += 1;
+		}
+
+		// Initial pagination states
+		pageCounter = 1;
+		pageAmount = PAGINATION.children.length;
+		makePageVisible(1);
+		BUTTON_PREV.disabled = true;
+		BUTTON_FIRST.disabled = true;
+
+		BUTTON_NEXT.disabled = false;
+		BUTTON_LAST.disabled = false;
+
+	}
+
+	// Generate page's DOM
+	function createPage(pageNumber, cardsArray) {
+
+		const pageTemplate = document.createElement('div');
+		pageTemplate.id = pageNumber;
+		pageTemplate.classList.add('pagination__page');
 
 		for(let card of cardsArray) {
 			const cardTemplate = document.createElement('div');
-			cardTemplate.classList.add('pagination__card');
+			cardTemplate.classList.add('card', 'pagination__card');
 			cardTemplate.dataset.unicNumber = card.unicNumber;
 			cardTemplate.innerHTML = `
 				<div class="friends__card">
@@ -40,9 +140,9 @@ export default function paginationSlide() {
 
 							<ul class="friends__article-list">
 								<li class="friends__article-item"><b>Age:</b> ${card.age}</li>
-								<li class="friends__article-item"><b>Inoculations:</b> ${card.inoculations.join()}</li>
-								<li class="friends__article-item"><b>Diseases:</b> ${card.diseases.join()}</li>
-								<li class="friends__article-item"><b>Parasites:</b> ${card.parasites.join()}</li>
+								<li class="friends__article-item"><b>Inoculations:</b> ${card.inoculations.join(', ')}</li>
+								<li class="friends__article-item"><b>Diseases:</b> ${card.diseases.join(', ')}</li>
+								<li class="friends__article-item"><b>Parasites:</b> ${card.parasites.join(', ')}</li>
 							</ul>
 						</div>
 
@@ -64,13 +164,78 @@ export default function paginationSlide() {
 					</article>
 				</dialog>
 			`;
-			paginationlItem.appendChild(cardTemplate);
+			pageTemplate.appendChild(cardTemplate);
+		}
+		PAGINATION.appendChild(pageTemplate);
+	}
+
+	function makePageVisible(pageNumber) {
+		const page = document.getElementById(`${pageNumber}`);
+		page.classList.add('pagination__page--active');
+
+		const BUTTON_CURRENT = document.querySelector('.button-nav--current');
+		BUTTON_CURRENT.textContent = pageNumber;
+	}
+
+	function hiddenPage(pageNumber) {
+		const page = document.getElementById(`${pageNumber}`);
+		page.classList.remove('pagination__page--active');
+	}
+
+	function enableNextButtons() {
+		BUTTON_NEXT.disabled = false;
+		BUTTON_LAST.disabled = false;
+
+		if(pageCounter === 1) {
+			BUTTON_PREV.disabled = true;
+			BUTTON_FIRST.disabled = true;
 		}
 	}
 
-	const cards = dataArray.slice(0);
-	const ITEM  = document.querySelector('.pagination__item');
-	createCards(ITEM, cards);
-	console.log(cards);
+	function enablePrevButtons() {
+		BUTTON_PREV.disabled = false;
+		BUTTON_FIRST.disabled = false;
+
+		if(pageCounter === pageAmount) {
+			BUTTON_NEXT.disabled = true;
+			BUTTON_LAST.disabled = true;
+		}
+	}
+
+	BUTTON_NEXT.addEventListener('click', (e) => {
+		if(pageCounter < pageAmount) {
+			pageCounter += 1;
+			makePageVisible(pageCounter);
+			hiddenPage(pageCounter - 1);
+			enablePrevButtons();
+		}
+	});
+
+	BUTTON_LAST.addEventListener('click', (e) => {
+		if(pageCounter !== pageAmount) {
+			hiddenPage(pageCounter);
+			pageCounter = pageAmount;
+			makePageVisible(pageCounter);
+			enablePrevButtons();
+		}
+	});
+
+	BUTTON_PREV.addEventListener('click', (e) => {
+		if(pageCounter > 1) {
+			pageCounter -= 1;
+			makePageVisible(pageCounter);
+			hiddenPage(pageCounter + 1);
+			enableNextButtons();
+		}
+	});
+
+	BUTTON_FIRST.addEventListener('click', (e) => {
+		if(pageCounter !== 1) {
+			hiddenPage(pageCounter);
+			pageCounter = 1;
+			makePageVisible(pageCounter);
+			enableNextButtons();
+		}
+	});
 
 }
