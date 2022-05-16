@@ -4,14 +4,14 @@ export default function modalWindowsToggle() {
 
 	// Listener for window open by card click
 	carousel.addEventListener('click', (e) => {
-		const friendsElement = e.target.closest('.carousel__card');
+		const friendsElement = e.target.closest('.card');
 
 		if(friendsElement) {
 			const modalWindow = friendsElement.querySelector('.friends__modal');
 
 			if(!modalWindow.open) {
 				modalWindow.showModal();
-				document.body.classList.toggle('body--hidden');
+				document.body.classList.add('body--hidden');
 			}
 		}
 	});
@@ -21,12 +21,12 @@ export default function modalWindowsToggle() {
 	document.addEventListener('click', (e) => {
 		if(!e.target.closest('.friends__article') && e.target.open) {
 			e.target.close();
-			document.body.classList.toggle('body--hidden');
+			document.body.classList.remove('body--hidden');
 		}
 
 		if(e.target.closest('.friends__article-button')) {
 			e.target.closest('.friends__modal').close();
-			document.body.classList.toggle('body--hidden');
+			document.body.classList.remove('body--hidden');
 		}
 	});
 
