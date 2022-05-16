@@ -5,7 +5,7 @@
 :cyclone: *Features*: Scss (7-1 pattern), JavaScript, Gulp, BEM.
 
 ## :hammer_and_wrench: Build installing
-* Install [NodeJS](https://nodejs.org/en/) ***16.14.2 LTS** (or another new version)* . 
+* Install [NodeJS](https://nodejs.org/en/) ***16.15.0 LTS** (or another new version)* . 
 * Download build with [Git](https://git-scm.com/downloads): ```git clone https://github.com/ithrforu/sheltersite/```
 * Install ```gulp``` globally: ```npm i --global gulp-cli```
 * Move to project folder: ```cd ~/sheltersite```
@@ -25,11 +25,17 @@ sheltersite
 │   │   │   └── ...
 │   │   ├── images
 │   │   │   └── ...
+│   │   ├── json
+│   │   │   └── pets.json
 │   │   ├── favicon.ico
-│   │   └── pets.json
 │   ├── js
-│   │   ├── main.js
-│   │   └── swiper-bundle.esm.browser.js
+│   │   ├── modules
+│   │   │   ├── burgerMenuToggle.js
+│   │   │   ├── carouselSlide.js
+│   │   │   ├── modalWindowsToggle.js
+│   │   │   └── paginationSlide.js
+│   │   ├── index.js
+│   │   └── pets.js
 │   ├── scss
 │   │   ├── abstracts
 │   │   │   ├── _breakpoints.scss
@@ -39,10 +45,11 @@ sheltersite
 │   │   │   ├── _colors.scss
 │   │   │   ├── _normalize.scss
 │   │   │   ├── _page.scss
-│   │   │   ├── _swiper-bundle.min.scss
 │   │   │   └── _typography.scss
 │   │   ├── components
-│   │   │   └── _buttons.scss
+│   │   │   ├── _buttons.scss
+│   │   │   ├── _carousel.scss
+│   │   │   └── _pagination.scss
 │   │   ├── layout
 │   │   │   ├── _footer.scss
 │   │   │   ├── _header.scss
